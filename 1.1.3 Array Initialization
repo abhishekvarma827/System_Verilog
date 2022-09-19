@@ -1,11 +1,17 @@
-module tb;
-  int arr1[5] = '{2,4,6,8,10};
-  int arr2[3]  = '{10,20,30};
+// Four ways of initialization of arrays.
 
+
+module tb;
+  int arr1[5] = '{2,4,6,8,10}; // Unique value.
+  int arr2[3];                // Uninitialized.
+  int arr3[6] = '{ 6{3} };     // Repetition operator.
+  int arr4[10] = '{default : 2}; // Default value.
   
 initial begin
 $display ("The value of array arr1 is %0p", arr1);
 $display ("The value of array arr2 is %0p", arr2);
+$display ("The value of array arr3 is %0p", arr3);
+$display ("The value of array arr4 is %0p", arr4);
 end
 
 endmodule 
