@@ -1,0 +1,11 @@
+module tb;
+  int arr1[5] = '{2,4,6,8,10};
+  int arr2[3]  = '{10,20,30};
+
+  
+initial begin
+$display ("The value of array arr1 is %0p", arr1);
+$display ("The value of array arr2 is %0p", arr2);
+end
+
+endmodule 
