@@ -1,0 +1,50 @@
+
+class first;
+  int data = 10;
+  
+  function first copy();
+    copy = new();
+    copy.data = data;
+  endfunction
+  
+endclass
+
+
+class second;
+  int ds = 20;
+  first f1;
+  
+  function new();
+    f1 = new();
+  endfunction
+  
+  function second copy();
+    copy = new();
+    copy.ds = ds;
+    copy.f1 = f1.copy;
+  endfunction
+  
+endclass
+
+module tb;
+  
+  second org;
+  second copy;
+  
+  initial begin
+  org = new();
+  copy =new();
+  
+  org.ds = 29;
+    copy = org.copy();
+    $display("Value of ds is ",copy.ds);
+    //Try to vary the value of data2 from copy and try to observe any changes happens to org data1
+    copy.ds = 66;
+    $display("Value of org is ",org.ds);
+    
+    copy.f1.data = 55;
+    $display("Value of org is ",org.f1.data);
+    //Now have an independent copy of a handler for both the original object and the copied object.
+  end
+  
+endmodule
