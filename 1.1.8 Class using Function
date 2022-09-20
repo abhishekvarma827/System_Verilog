@@ -16,3 +16,23 @@ res = addr(ain,bin);
 $display("Value of addition is ", res);
 end
 endclass
+
+/*
+
+class add;
+
+bit [4:0] res = 0;
+bit [3:0] ain = 4'0010;
+bit [3:0] bin = 4'1101;
+
+function bit [4:0] add()
+return ain+bin;
+endfunction
+
+initial begin
+res = add();
+$display("Value of addition is ", res);
+end
+endclass
+
+*/
