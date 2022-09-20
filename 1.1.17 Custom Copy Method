@@ -1,4 +1,5 @@
 
+/* ******************************************************METHOD 1*************************************************
 class trans;
   int a = 24;  
 endclass
@@ -16,3 +17,30 @@ initial begin
   
 end
 endmodule
+*/
+//****************************************************METHOD 2*********************************************************
+class trans;
+bit [3:0]a = 4'b0111;
+int b = 22;
+
+  function trans copy();
+copy = new();
+copy.a = a;
+copy.b = b;
+endfunction
+
+endclass
+
+module tb;
+
+trans first;
+trans second;
+
+initial begin
+first = new();
+second = new();
+
+second = first.copy;
+$display("a : %0d and b : %0d", second.a,second.b);
+end
+endmodule 
