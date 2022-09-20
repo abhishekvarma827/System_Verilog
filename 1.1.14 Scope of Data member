@@ -1,7 +1,7 @@
 
 class first;
   
- local int data = 34;
+ local int data = 34;   // Local 
   
   task set(input int data);
     this.data = data;
