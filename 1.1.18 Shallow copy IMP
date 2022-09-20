@@ -1,0 +1,41 @@
+
+class first;
+  int a = 2;
+endclass
+
+class second;
+  
+int b = 3;  
+  
+  first f1;
+  
+  function new();
+    f1 = new();
+  endfunction
+  
+endclass
+
+
+module tb();
+  second original;
+  second copy;
+  
+  initial begin
+    original = new(); 
+  original.b = 6;
+   // Both copy and original point to a same handle f1. 
+    
+  copy = new original;
+    $display("Value of a is %0d", copy.b);
+    copy.b = 12;  // Independent copy 
+    $display("Value of a is %0d", original.b);
+   
+    // We able to copy the value of data member from original to copy but if try to modify the value of data member in copy so this change won't be reflected to original.
+  
+  copy.f1.a = 22;
+    $display("Value of a is ",original.f1.a); //Updated from copied object.
+    //Modified the value of a from our copied object and try to print from the original object. BOTH S1 and S2 point at the same object.
+    //Get independent copy for a but don't get for handler for both the object.
+  end
+  
+endmodule
