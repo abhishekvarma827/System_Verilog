@@ -4,9 +4,15 @@ function bit [4:0] addr(input bit [3:0]a, input bit [3:0]b);
 return a+b;
 endfunction
 bit [4:0] res = 0;
+bit [3:0] ain = 4'0010;
+bit [3:0] bin = 4'1101;
 
+//If have added "default value" then we don't have to add the argument during the calling the function.
+// function bit [4:0] add (input [3:0]a = 4'b0000, input [3:0]b = 4'b1111); return a+b; IB  add(); end
+  
 initial begin
-res = addr(4'b0010,4'b1101);
+//res = addr(4'b0010,4'b1101);
+res = addr(ain,bin);
 $display("Value of addition is ", res);
 end
 endclass
