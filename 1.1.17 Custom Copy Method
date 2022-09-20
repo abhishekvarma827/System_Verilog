@@ -1,0 +1,18 @@
+
+class trans;
+  int a = 24;  
+endclass
+
+module tb;
+  trans original;
+  trans copy;
+initial begin
+  original = new();
+  original.a = 40;
+  copy = new original;
+  $display("The value of original variable is",original.a);
+  copy.a = 10;
+  $display("The value of copied variable is",copy.a);
+  
+end
+endmodule
