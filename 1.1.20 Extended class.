@@ -41,7 +41,7 @@ module tb;
     f = new();
     s = new();
     
-    f = s;
+    f = s;  //Adding whatever having s in f.
     f.display();
     
   end
