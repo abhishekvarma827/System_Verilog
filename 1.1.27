@@ -1,1 +1,20 @@
 
+class first;
+rand int wr;
+rand int rd;
+
+constraint { 
+wr dist {0 := 30, 1:= 70};
+rd dist {0 :/ 30, 1:= 70};}
+
+endclass
+
+module tb;
+first f;
+
+initial begin
+for(int i=0; i<10; i++) begin
+f.randmoize();
+$display("Value of wr : %od and rd : %od",f.wr,f.rd);
+end
+endmodule
