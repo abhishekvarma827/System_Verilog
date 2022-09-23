@@ -1,0 +1,117 @@
+
+class scoreboard;
+  
+   mailbox #(transaction) mbx;
+  
+   transaction tr;
+  
+   event next;
+  
+  bit [7:0] din[$];
+  bit[7:0] temp;
+  
+   function new(mailbox #(transaction) mbx);
+      this.mbx = mbx;     
+    endfunction;
+  
+  
+  task run();
+    
+  forever begin
+    
+    mbx.get(tr);
+    
+    tr.display("SCO");
+    
+    if(tr.wr == 1'b1)
+      begin 
+      din.push_front(tr.data_in);
+        $display("[SCO] : DATA STORED IN QUEUE :%0d", tr.data_in);
+      end
+    
+    if(tr.rd == 1'b1)
+      begin
+        if(tr.empty == 1'b0) begin 
+          
+          temp = din.pop_back();
+          
+          if(tr.data_out == temp)
+            $display("[SCO] : DATA MATCH");
+           else
+             $error("[SCO] : DATA MISMATCH");
+        end
+        else 
+          begin
+            $display("[SCO] : FIFO IS EMPTY");
+          end
+        
+        
+     end
+    
+    ->next;
+  end
+  endtask
+ 
+  
+endclass
+//////////////////////////////////////
+ 
+ 
+ 
+module tb;
+  
+  
+  monitor mon;
+  scoreboard sco;
+  
+  mailbox #(transaction) mbx;
+  
+  event next;
+  
+  
+   fifo_if fif();
+  
+   fifo dut (fif.clock, fif.rd, fif.wr,fif.full, fif.empty, fif.data_in, fif.data_out, fif.rst);
+    
+    initial begin
+      fif.clock <= 0;
+    end
+    
+    always #10 fif.clock <= ~fif.clock;
+ 
+  
+  
+  initial begin
+    mbx = new();
+    
+    mon = new(mbx);
+    sco = new(mbx);
+    
+    mon.fif = fif; 
+    
+    mon.next = next;
+    sco.next = next;
+  end
+  
+  initial begin
+    fork
+      mon.run();
+      sco.run();
+    join
+  end
+  
+      initial begin
+      #200;
+      $finish();      
+    end
+    
+    initial begin
+      $dumpfile("dump.vcd");
+      $dumpvars;
+    end
+  
+  
+  
+  
+  
+endmodule
